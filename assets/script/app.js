@@ -106,20 +106,22 @@ const dataArray = new Uint8Array(bufferLength);
 
 const canvas = document.querySelector('canvas');
 const canvasContext = canvas.getContext('2d');
-
 function draw() {
   analyser.getByteFrequencyData(dataArray);
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
-  const barWidth = canvas.width / bufferLength;
+  const barWidth = (canvas.width / bufferLength) * 4.5; // Change bar width here
   let barHeight;
   let x = 0;
 
   for(let i = 0; i < bufferLength; i++) {
-    barHeight = dataArray[i] * 0.6; //Change bar height here
-    canvasContext.fillStyle = 'rgba(255, 255, 255, 0.7)'; //Change bar color here
+    barHeight = dataArray[i] * 0.6; // Change bar height here
+    canvasContext.fillStyle = 'rgba(255, 255, 255, 0.3)'; // Change bar color here
+
+    // Change the shape of the bars here. Currently, it's a rectangle.
     canvasContext.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-    x += barWidth + 1;
+
+    x += barWidth + 1; // Change space between bars here
   }
 
   requestAnimationFrame(draw);
