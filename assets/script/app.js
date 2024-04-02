@@ -62,7 +62,7 @@ function resetGame() {
 }
 
 function startCountdown() {
-  let countdown = 15;
+  let countdown = INITIAL_COUNTDOWN;
   countdownElement.textContent = countdown;
 
   countdownInterval = setInterval(() => {
@@ -76,7 +76,7 @@ function startCountdown() {
 }
 
 function endGame() {
-  countdownElement.textContent = '15';
+  countdownElement.textContent = `${INITIAL_COUNTDOWN}`;
   clearInterval(countdownInterval);
   gameStarted = false;
   startButtonElement.textContent = 'RESTART';
