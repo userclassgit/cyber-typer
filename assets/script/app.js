@@ -73,7 +73,7 @@ startButtonElement.addEventListener('click', async () => {
       countdownElement.textContent = '15';
       clearInterval(countdownInterval);
       gameStarted = false;
-      startButtonElement.textContent = 'Restart';
+      startButtonElement.textContent = 'RESTART';
       inputElement.value = '';
       backgroundMusic.pause();
       backgroundMusic.currentTime = 0;
@@ -87,6 +87,9 @@ startButtonElement.addEventListener('click', async () => {
   inputElement.focus();
 
   gameStarted = true;
+  startButtonElement.textContent = 'RESTART';
+  inputElement.placeholder = '';
+
   backgroundMusic.play().catch(error => console.error("Audio playback error: ", error));
 });
 

@@ -3,8 +3,10 @@
 :root {
   --modal-background: rgba(0, 0, 0, 0.541);
   --font-color: #ffffff;
-  --orange: #FD4520;
+  --pink: #DE235C;
+  --teal: #3EEEF1;
   --border-radius: 13px;
+  --small-border-radius: 5px;
 }
 
 .center {
@@ -97,6 +99,8 @@ main {
 
 input {
   width: 9rem;
+  height: 2.4rem;
+  text-align: center;
 }
 
 input:focus {
@@ -104,7 +108,18 @@ input:focus {
 }
 
 .start-button {
-  
+  background: var(--pink);
+  border-radius: var(--small-border-radius);
+  font-size: .9rem;
+  padding: 0.4rem 1.2rem;
+  color: var(--font-color);
+  transition: all 0.3s;
+  cursor: pointer;
+  border: none;
+}
+
+.start-button:hover {
+  box-shadow: 0 0 20px 5px var(--pink);
 }
 
 #audio-visualizer {
