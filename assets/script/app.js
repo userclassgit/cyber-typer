@@ -14,7 +14,7 @@ const words = [
   'rainbow', 'bicycle', 'eclipse', 'calculator', 'trouble', 'watermelon', 
   'developer', 'philosophy', 'database', 'periodic', 'capitalism', 
   'abominable', 'component', 'future', 'pasta', 'microwave', 'jungle', 
-  'wallet', 'canada', 'coffee', 'monstrosity', 'abomination', 'chocolate', 
+  'wallet', 'canada', 'coffee', 'monstrosity', 'abomination', 'brazil', 
   'eleven', 'technology', 'alphabet', 'knowledge', 'magician', 'professor', 
   'triangle', 'earthquake', 'baseball', 'beyond', 'evolution', 'banana', 
   'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music', 
@@ -24,6 +24,9 @@ const words = [
   'science', 'mystery', 'famous', 'league', 'memory', 'leather', 'planet', 
   'software', 'update', 'yellow', 'keyboard', 'window'
 ];
+
+const INITIAL_COUNTDOWN = 99;
+
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
