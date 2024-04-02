@@ -21,3 +21,5 @@ class Score {
     return this.#percentage;
   }
 }
+
+export default Score;

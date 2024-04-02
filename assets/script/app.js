@@ -1,4 +1,5 @@
 import { listen, select } from './utils.js';
+import Score from './Score.js';
 'use strict';
 
 const countdownElement = select('.countdown');
@@ -28,7 +29,6 @@ const words = [
 const INITIAL_COUNTDOWN = 99;
 
 window.onload = function() {
-  const countdownElement = document.querySelector('.countdown');
   countdownElement.textContent = INITIAL_COUNTDOWN;
 };
 
@@ -87,6 +87,11 @@ function endGame() {
   inputElement.value = '';
   backgroundMusic.pause();
   backgroundMusic.currentTime = 0;
+
+  const date = new Date();
+  const percentage = ((hits / words.length) * 100).toFixed(1) + '%';
+  const score = new Score(date, hits, percentage);
+  console.log(score);
 }
 
 function resetHits() {
