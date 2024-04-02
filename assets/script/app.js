@@ -38,11 +38,41 @@ let gameStarted = false;
 
 const backgroundMusic = new Audio('/assets/media/music.mp3');
 
-startButtonElement.addEventListener('click', () => {
+let audioContext;
+let audioSource;
+let analyser;
+let bufferLength;
+let dataArray;
+
+
+startButtonElement.addEventListener('click', async () => {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    audioSource = audioContext.createMediaElementSource(backgroundMusic);
+    analyser = audioContext.createAnalyser();
+
+    audioSource.connect(analyser);
+    analyser.connect(audioContext.destination);
+
+    // Initialize bufferLength and dataArray here
+    bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
+
+    draw();
+
+    // Resume the AudioContext
+    if (audioContext.state === 'suspended') {
+      await audioContext.resume();
+    }
+  }
+
+  console.log('audioContext state:', audioContext.state);
+
+
   if (countdownInterval) {
     clearInterval(countdownInterval);
     backgroundMusic.pause();
-    backgroundMusic.currentTime = 0; // Reset the audio playback to the start
+    backgroundMusic.currentTime = 0;
   }
 
   let countdown = 15;
@@ -56,18 +86,18 @@ startButtonElement.addEventListener('click', () => {
       countdownElement.textContent = '15';
       clearInterval(countdownInterval);
       gameStarted = false;
-      startButtonElement.textContent = 'Restart'; // Change the button text to "Restart"
-      inputElement.value = ''; // Clear the input field
+      startButtonElement.textContent = 'Restart';
+      inputElement.value = '';
       backgroundMusic.pause();
-      backgroundMusic.currentTime = 0; // Reset the audio playback to the start
+      backgroundMusic.currentTime = 0;
     }
   }, 1000);
 
-  hits = 0; // Reset the hit counter
-  hitsElement.textContent = `Hits: ${hits}`; // Update the hit counter display
+  hits = 0;
+  hitsElement.textContent = `Hits: ${hits}`;
 
-  inputElement.value = ''; // Clear the input field
-  inputElement.focus(); // Set focus to the input field
+  inputElement.value = '';
+  inputElement.focus();
 
   gameStarted = true;
   backgroundMusic.play().catch(error => console.error("Audio playback error: ", error));
@@ -77,37 +107,24 @@ let hits = 0;
 
 inputElement.addEventListener('input', () => {
   if (gameStarted && inputElement.value === wordsCopy[0]) {
-    wordsCopy.shift(); // Remove the word from wordsCopy
-    wordElement.textContent = wordsCopy[0]; // Display the next word
-    inputElement.value = ''; // Clear the input field
-    hits++; // Increment the hit counter
-    hitsElement.textContent = `Hits: ${hits}`; // Update the hit counter display
+    wordsCopy.shift();
+    wordElement.textContent = wordsCopy[0];
+    inputElement.value = '';
+    hits++;
+    hitsElement.textContent = `Hits: ${hits}`;
   }
 });
-
-
-
-/*******************************************
- *                                         *
- *              Audio Visualizer           *
- *                                         *
- *******************************************/
-
-
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-const audioSource = audioContext.createMediaElementSource(backgroundMusic);
-const analyser = audioContext.createAnalyser();
-
-audioSource.connect(analyser);
-analyser.connect(audioContext.destination);
-
-const bufferLength = analyser.frequencyBinCount;
-const dataArray = new Uint8Array(bufferLength);
 
 const canvas = document.querySelector('canvas');
 const canvasContext = canvas.getContext('2d');
 function draw() {
+  if (!dataArray) return;
+  console.log('draw called');
+  console.log(dataArray);
+  if (!audioContext) return;
   analyser.getByteFrequencyData(dataArray);
+  console.log('dataArray:', dataArray);
+
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
   const barWidth = (canvas.width / bufferLength) * 4.5; // Change bar width here
@@ -116,15 +133,20 @@ function draw() {
 
   for(let i = 0; i < bufferLength; i++) {
     barHeight = dataArray[i] * 0.6; // Change bar height here
-    canvasContext.fillStyle = 'rgba(255, 255, 255, 0.3)'; // Change bar color here
+    console.log('barHeight:', barHeight);
 
-    // Change the shape of the bars here. Currently, it's a rectangle.
+    canvasContext.fillStyle = 'rgba(255, 255, 255, 0.3)'; // Change bar color here
+    
     canvasContext.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+    console.log('Bar drawn at:', x, canvas.height - barHeight, barWidth, barHeight);
 
     x += barWidth + 1; // Change space between bars here
   }
 
   requestAnimationFrame(draw);
+  
 }
 
 draw();
+
+
