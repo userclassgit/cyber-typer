@@ -48,7 +48,7 @@ let countdownInterval = null;
 
 let gameStarted = false;
 
-const backgroundMusic = new Audio('/assets/media/music.mp3');
+const backgroundMusic = new Audio('./assets/media/music.mp3');
 
 let audioContext;
 let audioSource;
