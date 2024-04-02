@@ -1,14 +1,29 @@
-import * as utils from './utils.js';
+import { listen, select } from './utils.js';
 'use strict';
 
-const backgroundVidElement = document.querySelector('.background-video');
-const countdownElement = document.querySelector('.countdown');
-const wordElement = document.querySelector('.word');
-const hitsElement = document.querySelector('.hits');
-const inputElement = document.querySelector('input');
-const startButtonElement = document.querySelector('.start-button');
+const countdownElement = select('.countdown');
+const wordElement = select('.word');
+const hitsElement = select('.hits');
+const inputElement = select('input');
+const startButtonElement = select('.start-button');
 
-const words = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population', 'weather', 'bottle', 'history', 'dream', 'character', 'money', 'absolute', 'discipline', 'machine', 'accurate', 'connection', 'rainbow', 'bicycle', 'eclipse', 'calculator', 'trouble', 'watermelon', 'developer', 'philosophy', 'database', 'periodic', 'capitalism', 'abominable', 'component', 'future', 'pasta', 'microwave', 'jungle', 'wallet', 'canada', 'coffee', 'monstrosity', 'abomination', 'chocolate', 'eleven', 'technology', 'alphabet', 'knowledge', 'magician', 'professor', 'triangle', 'earthquake', 'baseball', 'beyond', 'evolution', 'banana', 'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music', 'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 'button', 'superman', 'library', 'unboxing', 'bookstore', 'language', 'homework', 'fantastic', 'economy', 'interview', 'awesome', 'challenge', 'science', 'mystery', 'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow', 'keyboard', 'window'];
+const words = [
+  'dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 
+  'population', 'weather', 'bottle', 'history', 'dream', 'character', 
+  'money', 'absolute', 'discipline', 'machine', 'accurate', 'connection', 
+  'rainbow', 'bicycle', 'eclipse', 'calculator', 'trouble', 'watermelon', 
+  'developer', 'philosophy', 'database', 'periodic', 'capitalism', 
+  'abominable', 'component', 'future', 'pasta', 'microwave', 'jungle', 
+  'wallet', 'canada', 'coffee', 'monstrosity', 'abomination', 'chocolate', 
+  'eleven', 'technology', 'alphabet', 'knowledge', 'magician', 'professor', 
+  'triangle', 'earthquake', 'baseball', 'beyond', 'evolution', 'banana', 
+  'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music', 
+  'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 
+  'button', 'superman', 'library', 'unboxing', 'bookstore', 'language', 
+  'homework', 'fantastic', 'economy', 'interview', 'awesome', 'challenge', 
+  'science', 'mystery', 'famous', 'league', 'memory', 'leather', 'planet', 
+  'software', 'update', 'yellow', 'keyboard', 'window'
+];
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -35,33 +50,15 @@ let bufferLength;
 let dataArray;
 
 
-startButtonElement.addEventListener('click', async () => {
-  if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    audioSource = audioContext.createMediaElementSource(backgroundMusic);
-    analyser = audioContext.createAnalyser();
-
-    audioSource.connect(analyser);
-    analyser.connect(audioContext.destination);
-
-    bufferLength = analyser.frequencyBinCount;
-    dataArray = new Uint8Array(bufferLength);
-
-    draw();
-
-    // Resume the AudioContext
-    if (audioContext.state === 'suspended') {
-      await audioContext.resume();
-    }
-  }
-
-
+function resetGame() {
   if (countdownInterval) {
     clearInterval(countdownInterval);
     backgroundMusic.pause();
     backgroundMusic.currentTime = 0;
   }
+}
 
+function startCountdown() {
   let countdown = 15;
   countdownElement.textContent = countdown;
 
@@ -70,32 +67,67 @@ startButtonElement.addEventListener('click', async () => {
     countdownElement.textContent = countdown;
 
     if (countdown === 0) {
-      countdownElement.textContent = '15';
-      clearInterval(countdownInterval);
-      gameStarted = false;
-      startButtonElement.textContent = 'RESTART';
-      inputElement.value = '';
-      backgroundMusic.pause();
-      backgroundMusic.currentTime = 0;
+      endGame();
     }
   }, 1000);
+}
 
+function endGame() {
+  countdownElement.textContent = '15';
+  clearInterval(countdownInterval);
+  gameStarted = false;
+  startButtonElement.textContent = 'RESTART';
+  inputElement.value = '';
+  backgroundMusic.pause();
+  backgroundMusic.currentTime = 0;
+}
+
+function resetHits() {
   hits = 0;
   hitsElement.textContent = `Hits: ${hits}`;
+}
 
+function setupGameState() {
   inputElement.value = '';
   inputElement.focus();
-
   gameStarted = true;
   startButtonElement.textContent = 'RESTART';
   inputElement.placeholder = '';
+}
 
+function initializeAudioContext() {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    audioSource = audioContext.createMediaElementSource(backgroundMusic);
+    analyser = audioContext.createAnalyser();
+    audioSource.connect(analyser);
+    analyser.connect(audioContext.destination);
+    bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
+    draw();
+  }
+}
+
+function startMusicPlayback() {
   backgroundMusic.play().catch(error => console.error("Audio playback error: ", error));
+}
+
+function startGame() {
+  setupGameState();
+  initializeAudioContext();
+  startMusicPlayback();
+}
+
+listen('click', startButtonElement, async () => {
+  resetGame();
+  startCountdown();
+  resetHits();
+  startGame();
 });
 
 let hits = 0;
 
-inputElement.addEventListener('input', () => {
+listen('input', inputElement, () => {
   if (gameStarted && inputElement.value.toUpperCase() === wordsCopy[0].toUpperCase()) {
     wordsCopy.shift();
     wordElement.textContent = wordsCopy[0].toUpperCase();
@@ -112,29 +144,34 @@ inputElement.addEventListener('input', () => {
 
 const canvas = document.querySelector('canvas');
 const canvasContext = canvas.getContext('2d');
-function draw() {
-  if (!dataArray) return;
-  if (!audioContext) return;
+
+function getFrequencyData() {
+  if (!dataArray || !audioContext) return;
   analyser.getByteFrequencyData(dataArray);
+}
 
+function clearCanvas() {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+}
 
-  const barWidth = (canvas.width / bufferLength) * 4.5; // Change bar width here
+function drawBars() {
+  const barWidth = (canvas.width / bufferLength) * 4.5;
   let barHeight;
   let x = 0;
 
   for(let i = 0; i < bufferLength; i++) {
-    barHeight = dataArray[i] * 0.6; // Change bar height here
-
-    canvasContext.fillStyle = 'rgba(255, 255, 255, 0.3)'; // Change bar color here
-    
+    barHeight = dataArray[i] * 0.6;
+    canvasContext.fillStyle = 'rgba(255, 255, 255, 0.3)';
     canvasContext.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-
-    x += barWidth + 1; // Change space between bars here
+    x += barWidth + 1;
   }
+}
 
+function draw() {
+  getFrequencyData();
+  clearCanvas();
+  drawBars();
   requestAnimationFrame(draw);
-  
 }
 
 draw();
