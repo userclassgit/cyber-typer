@@ -27,6 +27,10 @@ const words = [
 
 const INITIAL_COUNTDOWN = 99;
 
+window.onload = function() {
+  const countdownElement = document.querySelector('.countdown');
+  countdownElement.textContent = INITIAL_COUNTDOWN;
+};
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
