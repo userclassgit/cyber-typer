@@ -11,10 +11,8 @@ const startButtonElement = document.querySelector('.start-button');
 
 const words = ['dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 'population', 'weather', 'bottle', 'history', 'dream', 'character', 'money', 'absolute', 'discipline', 'machine', 'accurate', 'connection', 'rainbow', 'bicycle', 'eclipse', 'calculator', 'trouble', 'watermelon', 'developer', 'philosophy', 'database', 'periodic', 'capitalism', 'abominable', 'component', 'future', 'pasta', 'microwave', 'jungle', 'wallet', 'canada', 'coffee', 'monstrosity', 'abomination', 'chocolate', 'eleven', 'technology', 'alphabet', 'knowledge', 'magician', 'professor', 'triangle', 'earthquake', 'baseball', 'beyond', 'evolution', 'banana', 'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music', 'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 'button', 'superman', 'library', 'unboxing', 'bookstore', 'language', 'homework', 'fantastic', 'economy', 'interview', 'awesome', 'challenge', 'science', 'mystery', 'famous', 'league', 'memory', 'leather', 'planet', 'software', 'update', 'yellow', 'keyboard', 'window'];
 
-// let wordsCopy = [...words];
 
 
-// Shuffle function
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -28,11 +26,6 @@ shuffle(wordsCopy);
 wordElement.textContent = wordsCopy[0];
 
 let countdownInterval = null;
-
-
-
-
-
 
 let gameStarted = false;
 
@@ -54,7 +47,6 @@ startButtonElement.addEventListener('click', async () => {
     audioSource.connect(analyser);
     analyser.connect(audioContext.destination);
 
-    // Initialize bufferLength and dataArray here
     bufferLength = analyser.frequencyBinCount;
     dataArray = new Uint8Array(bufferLength);
 
@@ -114,6 +106,11 @@ inputElement.addEventListener('input', () => {
     hitsElement.textContent = `Hits: ${hits}`;
   }
 });
+
+
+/*************************
+ *     Music Visualizer  *
+ *************************/
 
 const canvas = document.querySelector('canvas');
 const canvasContext = canvas.getContext('2d');
