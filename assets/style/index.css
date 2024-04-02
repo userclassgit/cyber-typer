@@ -20,7 +20,9 @@
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  /* font-family: "Roboto", sans-serif; */
+  /* font-family: "Chakra Petch", sans-serif; */
+  font-family: "Rationale", sans-serif;
   height: 100vh;
   color: var(--font-color);
 }
@@ -80,27 +82,35 @@ main {
   align-items: center;
   gap: 5px;
   .fa-clock {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
   .countdown {
     font-size: 3.5rem;
     line-height: 3.5rem;
   }
   .seconds {
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1rem;
   }
 }
 
 .word {
-  font-size: 3.5rem;
+  font-size: 4.2rem;
   line-height: 3.5rem;
+}
+
+.hits {
+  font-size: 1.3rem;
 }
 
 input {
   width: 9rem;
   height: 2.4rem;
   text-align: center;
+  font-family: "Rationale", sans-serif;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: var(--border-radius);
 }
 
 input:focus {
@@ -110,12 +120,13 @@ input:focus {
 .start-button {
   background: var(--pink);
   border-radius: var(--small-border-radius);
-  font-size: .9rem;
   padding: 0.4rem 1.2rem;
   color: var(--font-color);
   transition: all 0.3s;
   cursor: pointer;
   border: none;
+  font-family: "Rationale", sans-serif;
+  font-size: 1rem;
 }
 
 .start-button:hover {
