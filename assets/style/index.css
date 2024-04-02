@@ -68,13 +68,25 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem 0;
+  padding: 1rem 2rem;
   gap: 2rem;
   box-shadow: 0 0 49px 0 rgba(255,255,255,0.30);
   backdrop-filter: blur(24px);
-  
+  position: relative;
 }
 
+.top-buttons {
+  position: absolute;
+  top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.3rem;
+  & > * {
+    margin: 0 2rem;
+    cursor: pointer;
+  }
+}
 
 .timer-div {
   display: flex;
