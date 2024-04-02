@@ -1,8 +1,8 @@
 @charset "utf-8";
 
 :root {
-  --background-color: #ffffff;
-  --font-color: #514E4E;
+  --modal-background: rgba(0, 0, 0, 0.541);
+  --font-color: #ffffff;
   --orange: #FD4520;
   --border-radius: 13px;
 }
@@ -59,21 +59,53 @@ main {
   max-width: 27rem;
   height: 35rem;
   border-radius: var(--border-radius);
-  background-color: var(--background-color);
+  background-color: var(--modal-background);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 2rem 0;
   gap: 2rem;
+  box-shadow: 0 0 49px 0 rgba(255,255,255,0.30);
+  backdrop-filter: blur(24px);
+  
 }
+
 
 .timer-div {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 5px;
+  .fa-clock {
+    font-size: 1.5rem;
+  }
+  .countdown {
+    font-size: 3.5rem;
+    line-height: 3.5rem;
+  }
+  .seconds {
+    font-size: 1rem;
+    line-height: 1rem;
+  }
 }
 
+.word {
+  font-size: 3.5rem;
+  line-height: 3.5rem;
+}
+
+input {
+  width: 9rem;
+}
+
+input:focus {
+  outline: none;
+}
+
+.start-button {
+  
+}
 
 #audio-visualizer {
   position: fixed;
