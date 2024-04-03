@@ -139,13 +139,39 @@ listen('click', startButtonElement, async () => {
 
 let hits = 0;
 
+// listen('input', inputElement, () => {
+//   if (gameStarted && inputElement.value.toUpperCase() === wordsCopy[0].toUpperCase()) {
+//     wordsCopy.shift();
+//     wordElement.textContent = wordsCopy[0].toUpperCase();
+//     inputElement.value = '';
+//     hits++;
+//     hitsElement.textContent = `Hits: ${hits}`;
+//   }
+// });
+
 listen('input', inputElement, () => {
-  if (gameStarted && inputElement.value.toUpperCase() === wordsCopy[0].toUpperCase()) {
-    wordsCopy.shift();
-    wordElement.textContent = wordsCopy[0].toUpperCase();
-    inputElement.value = '';
-    hits++;
-    hitsElement.textContent = `Hits: ${hits}`;
+  if (gameStarted) {
+    const inputText = inputElement.value.toUpperCase();
+    const currentWord = wordsCopy[0].toUpperCase();
+
+    if (currentWord.startsWith(inputText)) {
+      const correctLetters = currentWord.slice(0, inputText.length);
+      const remainingLetters = currentWord.slice(inputText.length);
+      wordElement.innerHTML = `<span style="color: var(--teal);">${correctLetters}</span>${remainingLetters}`;
+    } else {
+      // The user has made a mistake
+      // Reset the color and font-style of all letters
+      wordElement.textContent = currentWord;
+    }
+
+    if (inputText === currentWord) {
+      // The user has typed the current word correctly
+      wordsCopy.shift();
+      wordElement.textContent = wordsCopy[0].toUpperCase();
+      inputElement.value = '';
+      hits++;
+      hitsElement.textContent = `Hits: ${hits}`;
+    }
   }
 });
 
