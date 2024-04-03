@@ -109,6 +109,7 @@ main {
 .word {
   font-size: 4.2rem;
   line-height: 3.5rem;
+  /* letter-spacing: .2rem; */
 }
 
 .hits {
@@ -131,6 +132,7 @@ input:focus {
 
 .correct-letter {
   color: var(--teal);
+  font-style: italic;
   text-shadow:
     0 0 11px rgba(0, 255, 255, 0.7),
     0 0 22px rgba(0, 255, 255, 0.6),
