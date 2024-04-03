@@ -20,8 +20,6 @@
 }
 
 body {
-  /* font-family: "Roboto", sans-serif; */
-  /* font-family: "Chakra Petch", sans-serif; */
   font-family: "Rationale", sans-serif;
   height: 100vh;
   color: var(--font-color);
@@ -155,7 +153,10 @@ input:disabled {
   border: none;
   font-family: "Rationale", sans-serif;
   font-size: 1rem;
-  display: block;
+  display: inline-block;
+  position: relative;
+  z-index: 10;
+  transform: translateZ(0);
 }
 
 .start-button:hover {
