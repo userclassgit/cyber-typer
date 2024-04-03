@@ -9,28 +9,34 @@ const inputElement = select('input');
 const startButtonElement = select('.start-button');
 
 const words = [
-  'dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 
-  'population', 'weather', 'bottle', 'history', 'dream', 'character', 
-  'money', 'absolute', 'discipline', 'machine', 'accurate', 'connection', 
-  'rainbow', 'bicycle', 'eclipse', 'calculator', 'trouble', 'watermelon', 
-  'developer', 'philosophy', 'database', 'periodic', 'capitalism', 
-  'abominable', 'component', 'future', 'pasta', 'microwave', 'jungle', 
-  'wallet', 'canada', 'coffee', 'monstrosity', 'abomination', 'brazil', 
-  'eleven', 'technology', 'alphabet', 'knowledge', 'magician', 'professor', 
-  'triangle', 'earthquake', 'baseball', 'beyond', 'evolution', 'banana', 
-  'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music', 
-  'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 
-  'button', 'superman', 'library', 'unboxing', 'bookstore', 'language', 
-  'homework', 'fantastic', 'economy', 'interview', 'awesome', 'challenge', 
-  'science', 'mystery', 'famous', 'league', 'memory', 'leather', 'planet', 
-  'software', 'update', 'yellow', 'keyboard', 'window'
+  'dinosaur', 'love'
 ];
+
+// const words = [
+//   'dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 
+//   'population', 'weather', 'bottle', 'history', 'dream', 'character', 
+//   'money', 'absolute', 'discipline', 'machine', 'accurate', 'connection', 
+//   'rainbow', 'bicycle', 'eclipse', 'calculator', 'trouble', 'watermelon', 
+//   'developer', 'philosophy', 'database', 'periodic', 'capitalism', 
+//   'abominable', 'component', 'future', 'pasta', 'microwave', 'jungle', 
+//   'wallet', 'canada', 'coffee', 'monstrosity', 'abomination', 'brazil', 
+//   'eleven', 'technology', 'alphabet', 'knowledge', 'magician', 'professor', 
+//   'triangle', 'earthquake', 'baseball', 'beyond', 'evolution', 'banana', 
+//   'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music', 
+//   'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 
+//   'button', 'superman', 'library', 'unboxing', 'bookstore', 'language', 
+//   'homework', 'fantastic', 'economy', 'interview', 'awesome', 'challenge', 
+//   'science', 'mystery', 'famous', 'league', 'memory', 'leather', 'planet', 
+//   'software', 'update', 'yellow', 'keyboard', 'window'
+// ];
 
 const INITIAL_COUNTDOWN = 99;
 
 window.onload = function() {
   countdownElement.textContent = INITIAL_COUNTDOWN;
 };
+
+inputElement.disabled = true;
 
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -57,12 +63,19 @@ let bufferLength;
 let dataArray;
 
 
+
+function stopMusicPlayback() {
+  backgroundMusic.pause();
+  backgroundMusic.currentTime = 0;
+}
+
 function resetGame() {
   if (countdownInterval) {
     clearInterval(countdownInterval);
-    backgroundMusic.pause();
-    backgroundMusic.currentTime = 0;
+    stopMusicPlayback();
   }
+  wordsCopy = [...words];
+  shuffle(wordsCopy);
 }
 
 function startCountdown() {
@@ -128,20 +141,23 @@ function startGame() {
   setupGameState();
   initializeAudioContext();
   startMusicPlayback();
+  inputElement.disabled = false;
+  inputElement.focus();
+  wordElement.textContent = wordsCopy[0].toUpperCase();
 }
 
 listen('click', startButtonElement, async () => {
   resetGame();
+  startGame();
   startCountdown();
   resetHits();
-  startGame();
 });
 
 let hits = 0;
 
 
 listen('input', inputElement, () => {
-  if (gameStarted) {
+  if (gameStarted && wordsCopy.length > 0) {
     const inputText = inputElement.value.toUpperCase();
     const currentWord = wordsCopy[0].toUpperCase();
 
@@ -155,10 +171,15 @@ listen('input', inputElement, () => {
 
     if (inputText === currentWord) {
       wordsCopy.shift();
-      wordElement.textContent = wordsCopy[0].toUpperCase();
+      wordElement.textContent = wordsCopy.length > 0 ? wordsCopy[0].toUpperCase() : '';
       inputElement.value = '';
       hits++;
       hitsElement.textContent = `Hits: ${hits}`;
+
+      if (wordsCopy.length === 0) {
+        stopMusicPlayback();
+        wordElement.textContent = "YOU WIN!";
+      }
     }
   }
 });
