@@ -129,6 +129,16 @@ input:focus {
   outline: none;
 }
 
+.correct-letter {
+  color: var(--teal);
+  text-shadow:
+    0 0 11px rgba(0, 255, 255, 0.7),
+    0 0 22px rgba(0, 255, 255, 0.6),
+    0 0 33px rgba(0, 255, 255, 0.5),
+    0 0 44px rgba(0, 255, 255, 0.4),
+    0 0 55px rgba(0, 255, 255, 0.3),
+    0 0 66px rgba(0, 255, 255, 0.2);
+}
 .start-button {
   background: var(--pink);
   border-radius: var(--small-border-radius);
@@ -139,11 +149,19 @@ input:focus {
   border: none;
   font-family: "Rationale", sans-serif;
   font-size: 1rem;
+  display: block;
 }
 
 .start-button:hover {
-  box-shadow: 0 0 20px 5px var(--pink);
+  box-shadow: 
+    0 0 10px rgba(255, 105, 180, 0.3),
+    0 0 30px rgba(255, 105, 180, 0.3),
+    0 0 40px rgba(255, 105, 180, 0.3),
+    0 0 50px rgba(255, 105, 180, 0.3),
+    0 0 60px rgba(255, 105, 180, 0.3),
+    0 0 70px rgba(255, 105, 180, 0.3);
 }
+
 
 #audio-visualizer {
   position: fixed;
