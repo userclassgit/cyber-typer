@@ -167,6 +167,26 @@ listen('click', startButtonElement, async () => {
 let hits = 0;
 
 
+const updateWordElement = (correctLetters, remainingLetters) => {
+  wordElement.innerHTML = `<span class="correct-letter">${correctLetters}</span>${remainingLetters}`;
+};
+
+const processCorrectInput = () => {
+  wordsCopy.shift();
+  wordElement.textContent = wordsCopy.length > 0 ? wordsCopy[0].toUpperCase() : '';
+  inputElement.value = '';
+  hits++;
+  hitsElement.textContent = `Hits: ${hits}`;
+};
+
+const whenPlayerWins = () => {
+  clearInterval(countdownInterval);
+  stopMusicPlayback();
+  wordElement.textContent = "YOU WIN!";
+  inputElement.disabled = true;
+  inputElement.placeholder = "Click start to type";
+};
+
 listen('input', inputElement, () => {
   if (gameStarted && wordsCopy.length > 0) {
     const inputText = inputElement.value.toUpperCase();
@@ -175,24 +195,15 @@ listen('input', inputElement, () => {
     if (currentWord.startsWith(inputText)) {
       const correctLetters = currentWord.slice(0, inputText.length);
       const remainingLetters = currentWord.slice(inputText.length);
-      wordElement.innerHTML = `<span class="correct-letter">${correctLetters}</span>${remainingLetters}`;
+      updateWordElement(correctLetters, remainingLetters);
     } else {
-      wordElement.textContent = currentWord;
+      inputElement.value = inputElement.value.slice(0, -1);
     }
 
     if (inputText === currentWord) {
-      wordsCopy.shift();
-      wordElement.textContent = wordsCopy.length > 0 ? wordsCopy[0].toUpperCase() : '';
-      inputElement.value = '';
-      hits++;
-      hitsElement.textContent = `Hits: ${hits}`;
-
+      processCorrectInput();
       if (wordsCopy.length === 0) {
-        clearInterval(countdownInterval);
-        stopMusicPlayback();
-        wordElement.textContent = "YOU WIN!";
-        inputElement.disabled = true;
-        inputElement.placeholder = "Click start to type";
+        whenPlayerWins();
       }
     }
   }
