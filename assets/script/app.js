@@ -7,6 +7,8 @@ const wordElement = select('.word');
 const hitsElement = select('.hits');
 const inputElement = select('input');
 const startButtonElement = select('.start-button');
+const volumeHighElement = select('.fa-volume-high');
+const volumeXmarkElement = select('.fa-volume-xmark');
 
 // For testing
 const words = [
@@ -194,6 +196,22 @@ listen('input', inputElement, () => {
       }
     }
   }
+});
+
+// Mute/unmute buttons
+
+volumeHighElement.style.display = 'none';
+
+listen('click', volumeHighElement, () => {
+  backgroundMusic.muted = false;
+  volumeHighElement.style.display = 'none';
+  volumeXmarkElement.style.display = 'inline-block';
+});
+
+listen('click', volumeXmarkElement, () => {
+  backgroundMusic.muted = true;
+  volumeXmarkElement.style.display = 'none';
+  volumeHighElement.style.display = 'inline-block';
 });
 
 /*************************
