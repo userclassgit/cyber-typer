@@ -225,6 +225,21 @@ listen('click', volumeXmarkElement, () => {
 });
 
 /*************************
+ *       Leaderboard     *
+ *************************/
+const leaderboardIcon = select('.fa-ranking-star');
+const leaderboard = select('.leaderboard');
+
+listen('click', leaderboardIcon, () => {
+  leaderboard.classList.toggle('leaderboard-visible');
+});
+
+
+
+
+
+
+/*************************
  *     Music Visualizer  *
  *************************/
 
