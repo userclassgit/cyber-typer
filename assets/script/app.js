@@ -9,36 +9,37 @@ const inputElement = select('input');
 const startButtonElement = select('.start-button');
 
 // For testing
-// const words = [
-//   'dinosaur', 'love'
-// ];
-
 const words = [
-  'dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 
-  'population', 'weather', 'bottle', 'history', 'dream', 'character', 
-  'money', 'absolute', 'discipline', 'machine', 'accurate', 'connection', 
-  'rainbow', 'bicycle', 'eclipse', 'calculator', 'trouble', 'watermelon', 
-  'developer', 'philosophy', 'database', 'periodic', 'capitalism', 
-  'abominable', 'component', 'future', 'pasta', 'microwave', 'jungle', 
-  'wallet', 'canada', 'coffee', 'monstrosity', 'abomination', 'brazil', 
-  'eleven', 'technology', 'alphabet', 'knowledge', 'magician', 'professor', 
-  'triangle', 'earthquake', 'baseball', 'beyond', 'evolution', 'banana', 
-  'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music', 
-  'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 
-  'button', 'superman', 'library', 'unboxing', 'bookstore', 'language', 
-  'homework', 'fantastic', 'economy', 'interview', 'awesome', 'challenge', 
-  'science', 'mystery', 'famous', 'league', 'memory', 'leather', 'planet', 
-  'software', 'update', 'yellow', 'keyboard', 'window'
+  'dinosaur', 'love'
 ];
 
-// For test
-// const INITIAL_COUNTDOWN = 10;
+// const words = [
+//   'dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 
+//   'population', 'weather', 'bottle', 'history', 'dream', 'character', 
+//   'money', 'absolute', 'discipline', 'machine', 'accurate', 'connection', 
+//   'rainbow', 'bicycle', 'eclipse', 'calculator', 'trouble', 'watermelon', 
+//   'developer', 'philosophy', 'database', 'periodic', 'capitalism', 
+//   'abominable', 'component', 'future', 'pasta', 'microwave', 'jungle', 
+//   'wallet', 'canada', 'coffee', 'monstrosity', 'abomination', 'brazil', 
+//   'eleven', 'technology', 'alphabet', 'knowledge', 'magician', 'professor', 
+//   'triangle', 'earthquake', 'baseball', 'beyond', 'evolution', 'banana', 
+//   'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music', 
+//   'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 
+//   'button', 'superman', 'library', 'unboxing', 'bookstore', 'language', 
+//   'homework', 'fantastic', 'economy', 'interview', 'awesome', 'challenge', 
+//   'science', 'mystery', 'famous', 'league', 'memory', 'leather', 'planet', 
+//   'software', 'update', 'yellow', 'keyboard', 'window'
+// ];
 
-const INITIAL_COUNTDOWN = 99;
+// For testing
+const INITIAL_COUNTDOWN = 10;
+
+// const INITIAL_COUNTDOWN = 99;
 
 window.onload = function() {
   countdownElement.textContent = INITIAL_COUNTDOWN;
   inputElement.value = '';
+  wordElement.textContent = 'GET READY';
 };
 
 inputElement.disabled = true;

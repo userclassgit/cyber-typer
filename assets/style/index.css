@@ -68,7 +68,7 @@ main {
   justify-content: center;
   padding: 1rem 2rem;
   gap: 2rem;
-  box-shadow: 0 0 49px 0 rgba(255,255,255,0.30);
+  /* box-shadow: 0 0 49px 0 rgba(255,255,255,0.30); */
   backdrop-filter: blur(24px);
   position: relative;
 }
