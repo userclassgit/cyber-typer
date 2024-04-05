@@ -166,6 +166,7 @@ listen('click', startButtonElement, async () => {
 
 let hits = 0;
 
+// Input methods and listener
 
 const updateWordElement = (correctLetters, remainingLetters) => {
   wordElement.innerHTML = `<span class="correct-letter">${correctLetters}</span>${remainingLetters}`;
@@ -196,12 +197,10 @@ listen('input', inputElement, () => {
       const correctLetters = currentWord.slice(0, inputText.length);
       const remainingLetters = currentWord.slice(inputText.length);
       updateWordElement(correctLetters, remainingLetters);
-    } else {
-      inputElement.value = inputElement.value.slice(0, -1);
     }
 
     if (inputText === currentWord) {
-      processCorrectInput();
+      processCorrectInput(); 
       if (wordsCopy.length === 0) {
         whenPlayerWins();
       }

@@ -3,7 +3,7 @@
 :root {
   --modal-background: rgba(0, 0, 0, 0.541);
   --font-color: #ffffff;
-  --pink: #DE235C;
+  --pink: #e83352;
   --teal: #3EEEF1;
   --border-radius: 13px;
   --small-border-radius: 5px;
@@ -161,12 +161,12 @@ input:disabled {
 
 .start-button:hover {
   box-shadow: 
-    0 0 10px rgba(255, 105, 180, 0.3),
-    0 0 30px rgba(255, 105, 180, 0.3),
-    0 0 40px rgba(255, 105, 180, 0.3),
-    0 0 50px rgba(255, 105, 180, 0.3),
-    0 0 60px rgba(255, 105, 180, 0.3),
-    0 0 70px rgba(255, 105, 180, 0.3);
+    0 0 10px rgba(232, 51, 82, 0.3),
+    0 0 30px rgba(232, 51, 82, 0.3),
+    0 0 40px rgba(232, 51, 82, 0.3),
+    0 0 50px rgba(232, 51, 82, 0.3),
+    0 0 60px rgba(232, 51, 82, 0.3),
+    0 0 70px rgba(232, 51, 82, 0.3);
 }
 
 
