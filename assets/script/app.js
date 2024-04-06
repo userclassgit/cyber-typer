@@ -279,27 +279,35 @@ function addScore(hits, percentage, date) {
 
 function updateLeaderboard() {
   leaderboardContentElement.innerHTML = '';
-  scores.forEach(function(score, index) {
-    const li = document.createElement('li');
-    li.className = 'leaderboard-item';
 
-    const rankSpan = document.createElement('span');
-    rankSpan.className = 'rank';
-    rankSpan.textContent = index + 1;
-    li.appendChild(rankSpan);
+  if (scores.length === 0) {
+    const noScoresMessage = document.createElement('p');
+    noScoresMessage.textContent = 'No scores available yet.';
+    noScoresMessage.classList.add('no-scores-message');
+    leaderboardContentElement.appendChild(noScoresMessage);
+  } else {
+    scores.forEach(function(score, index) {
+      const li = document.createElement('li');
+      li.className = 'leaderboard-item';
 
-    const hitsSpan = document.createElement('span');
-    hitsSpan.className = 'hits';
-    hitsSpan.textContent = score.hits;
-    li.appendChild(hitsSpan);
+      const rankSpan = document.createElement('span');
+      rankSpan.className = 'rank';
+      rankSpan.textContent = `#${index + 1}`;
+      li.appendChild(rankSpan);
 
-    const dateSpan = document.createElement('span');
-    dateSpan.className = 'date';
-    dateSpan.textContent = score.date;
-    li.appendChild(dateSpan);
+      const hitsSpan = document.createElement('span');
+      hitsSpan.className = 'hits';
+      hitsSpan.textContent = score.hits;
+      li.appendChild(hitsSpan);
 
-    leaderboardContentElement.appendChild(li);
-  });
+      const dateSpan = document.createElement('span');
+      dateSpan.className = 'date';
+      dateSpan.textContent = score.date;
+      li.appendChild(dateSpan);
+
+      leaderboardContentElement.appendChild(li);
+    });
+  }
 }
 
 

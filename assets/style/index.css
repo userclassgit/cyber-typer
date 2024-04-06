@@ -107,7 +107,6 @@ main {
 .word {
   font-size: 4.2rem;
   line-height: 3.5rem;
-  /* letter-spacing: .2rem; */
 }
 
 .hits {
@@ -134,7 +133,7 @@ input:disabled {
 
 .correct-letter {
   color: var(--teal);
-  font-style: italic;
+  /* font-style: italic; */
   text-shadow:
     0 0 11px rgba(0, 255, 255, 0.7),
     0 0 22px rgba(0, 255, 255, 0.6),
@@ -213,6 +212,7 @@ input:disabled {
 }
 
 .leaderboard-content {
+  font-family: "Roboto", sans-serif;
   list-style-type: none;
   padding: 0;
   width: 80%;
@@ -236,6 +236,11 @@ input:disabled {
   width: auto;
   margin-left: auto;
   margin-right: auto;
+}
+
+.no-scores-message {
+  text-align: center;
+  margin-top: 1rem;
 }
 
 /* ==============================Font============================== */
