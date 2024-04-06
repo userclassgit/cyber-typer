@@ -189,7 +189,9 @@ input:disabled {
   opacity: 0;
   backdrop-filter: blur(24px);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-content: start;
+  align-items: center;
 }
 
 .leaderboard.leaderboard-visible {
@@ -210,7 +212,31 @@ input:disabled {
   }
 }
 
+.leaderboard-content {
+  list-style-type: none;
+  padding: 0;
+  width: 80%;
+}
 
+.leaderboard-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  position: relative;
+}
+
+.leaderboard-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: .5px;
+  background: #ffffff;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 /* ==============================Font============================== */
 
