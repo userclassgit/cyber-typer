@@ -194,6 +194,7 @@ input:disabled {
   flex-direction: column;
   align-content: start;
   align-items: center;
+  padding: 0 2rem;
 }
 
 .leaderboard.leaderboard-visible {
@@ -218,7 +219,7 @@ input:disabled {
   font-family: "Roboto", sans-serif;
   list-style-type: none;
   padding: 0;
-  width: 80%;
+  width: 100%;
 }
 
 .leaderboard-item {
