@@ -215,16 +215,16 @@ listen('input', inputElement, () => {
 
 // Mute/unmute buttons
 
-volumeHighElement.style.display = 'none';
+volumeXmarkElement.style.display = 'none';
 
 listen('click', volumeHighElement, () => {
-  backgroundMusic.muted = false;
+  backgroundMusic.muted = true;
   volumeHighElement.style.display = 'none';
   volumeXmarkElement.style.display = 'inline-block';
 });
 
 listen('click', volumeXmarkElement, () => {
-  backgroundMusic.muted = true;
+  backgroundMusic.muted = false;
   volumeXmarkElement.style.display = 'none';
   volumeHighElement.style.display = 'inline-block';
 });

@@ -7,6 +7,9 @@
   --teal: #3EEEF1;
   --border-radius: 13px;
   --small-border-radius: 5px;
+  --highlight-vertical-spacing: 2px;
+  --highlight-horizontal-spacing: -15px;
+  --highlight-alpha: 0.35;
 }
 
 .center {
@@ -199,7 +202,7 @@ input:disabled {
 
 .leaderboard-title {
   height: 1.5rem;
-  margin-top: .8rem;
+  margin: 1.5rem 0;
   .fa-solid {
     font-size: 1.3rem;
   }
@@ -221,14 +224,50 @@ input:disabled {
 .leaderboard-item {
   display: flex;
   justify-content: space-between;
-  padding: 1rem 0;
+  padding: .6rem 0;
   position: relative;
   span {
     font-size: 1.2rem;
   }
 }
 
-.leaderboard-item:not(:last-child)::after {
+.leaderboard-item:first-child {
+  position: relative;
+}
+
+.leaderboard-item:first-child::before {
+  content: "";
+  position: absolute;
+  top: var(--highlight-vertical-spacing);
+  left: var(--highlight-horizontal-spacing);
+  right: var(--highlight-horizontal-spacing);
+  bottom: var(--highlight-vertical-spacing);
+  /* top 3 scores highlight */
+  background: rgba(232, 51, 81, var(--highlight-alpha)); 
+  border-radius: var(--small-border-radius);
+  z-index: -1;
+}
+
+.leaderboard-item:nth-child(2),
+.leaderboard-item:nth-child(3) {
+  position: relative;
+}
+
+.leaderboard-item:nth-child(2)::before,
+.leaderboard-item:nth-child(3)::before {
+  content: "";
+  position: absolute;
+  top: var(--highlight-vertical-spacing);
+  left: var(--highlight-horizontal-spacing);
+  right: var(--highlight-horizontal-spacing);
+  bottom: var(--highlight-vertical-spacing);
+  /* top 3 scores highlight */
+  background: rgba(152, 252, 254, var(--highlight-alpha));
+  border-radius: var(--small-border-radius);
+  z-index: -1;
+}
+
+.leaderboard-item:not(:last-child):not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3))::after {
   content: "";
   position: absolute;
   left: 0;
