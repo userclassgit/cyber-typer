@@ -12,32 +12,36 @@ const volumeXmarkElement = select('.fa-volume-xmark');
 const leaderboardContentElement = select('.leaderboard-content');
 
 // For testing
-const words = [
-  'dinosaur', 'love'
-];
-
 // const words = [
-//   'dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 
-//   'population', 'weather', 'bottle', 'history', 'dream', 'character', 
-//   'money', 'absolute', 'discipline', 'machine', 'accurate', 'connection', 
-//   'rainbow', 'bicycle', 'eclipse', 'calculator', 'trouble', 'watermelon', 
-//   'developer', 'philosophy', 'database', 'periodic', 'capitalism', 
-//   'abominable', 'component', 'future', 'pasta', 'microwave', 'jungle', 
-//   'wallet', 'canada', 'coffee', 'monstrosity', 'abomination', 'brazil', 
-//   'eleven', 'technology', 'alphabet', 'knowledge', 'magician', 'professor', 
-//   'triangle', 'earthquake', 'baseball', 'beyond', 'evolution', 'banana', 
-//   'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music', 
-//   'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 
-//   'button', 'superman', 'library', 'unboxing', 'bookstore', 'language', 
-//   'homework', 'fantastic', 'economy', 'interview', 'awesome', 'challenge', 
-//   'science', 'mystery', 'famous', 'league', 'memory', 'leather', 'planet', 
-//   'software', 'update', 'yellow', 'keyboard', 'window'
+//   'dinosaur', 'love'
 // ];
 
+const words = [
+  'dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 
+  'population', 'weather', 'bottle', 'history', 'dream', 'character', 
+  'money', 'absolute', 'discipline', 'machine', 'accurate', 'connection', 
+  'rainbow', 'bicycle', 'eclipse', 'calculator', 'trouble', 'watermelon', 
+  'developer', 'philosophy', 'database', 'periodic', 'capitalism', 
+  'abominable', 'component', 'future', 'pasta', 'microwave', 'jungle', 
+  'wallet', 'canada', 'coffee', 'monstrosity', 'abomination', 'brazil', 
+  'eleven', 'technology', 'alphabet', 'knowledge', 'magician', 'professor', 
+  'triangle', 'earthquake', 'baseball', 'beyond', 'evolution', 'banana', 
+  'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music', 
+  'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 
+  'button', 'superman', 'library', 'unboxing', 'bookstore', 'language', 
+  'homework', 'fantastic', 'economy', 'interview', 'awesome', 'challenge', 
+  'science', 'mystery', 'famous', 'league', 'memory', 'leather', 'planet', 
+  'software', 'update', 'yellow', 'keyboard', 'window'
+];
+
 // For testing
-const INITIAL_COUNTDOWN = 10;
+const INITIAL_COUNTDOWN = 20;
 
 // const INITIAL_COUNTDOWN = 99;
+
+
+// For test (clears localStorage data)
+// localStorage.clear();
 
 window.onload = function() {
   countdownElement.textContent = INITIAL_COUNTDOWN;
@@ -256,20 +260,21 @@ function makeScoreObject(hits, percentage, date) {
 
 
 function addScore(hits, percentage, date) {
-
   let score = makeScoreObject(hits, percentage, date);
-  scores.push(score);
+  /* If the leaderboard isn't empty. Only add a new score if 
+  the score is higher than the lowest score on the leaderboard.
+  That is, only add a new score when you get a better score. */
+  if (scores.length === 0 || hits > scores[scores.length - 1].hits) {
+    scores.push(score);
+    scores.sort((a, b) => b.hits - a.hits);
 
-  scores.sort(function(a, b) {
-    return b.hits - a.hits;
-  });
+    if (scores.length > 10) {
+      scores.splice(10);
+    }
 
-  if (scores.length > 10) {
-    scores.splice(10);
+    localStorage.setItem('scores', JSON.stringify(scores));
+    updateLeaderboard();
   }
-  
-  localStorage.setItem('scores', JSON.stringify(scores));
-  updateLeaderboard();
 }
 
 function updateLeaderboard() {
