@@ -9,6 +9,7 @@ const inputElement = select('input');
 const startButtonElement = select('.start-button');
 const volumeHighElement = select('.fa-volume-high');
 const volumeXmarkElement = select('.fa-volume-xmark');
+const leaderboardContentElement = select('.leaderboard-content');
 
 // For testing
 const words = [
@@ -42,6 +43,8 @@ window.onload = function() {
   countdownElement.textContent = INITIAL_COUNTDOWN;
   inputElement.value = '';
   wordElement.textContent = 'GET READY';
+  scores = JSON.parse(localStorage.getItem('scores')) || [];
+  updateLeaderboard();
 };
 
 inputElement.disabled = true;
@@ -111,6 +114,7 @@ function endGame() {
   inputElement.placeholder = "Click start to type";
   backgroundMusic.pause();
   backgroundMusic.currentTime = 0;
+  addScore(hits, 0, new Date().toLocaleDateString());
 }
 
 function resetHits() {
@@ -164,7 +168,8 @@ let hits = 0;
 // Input methods and listener
 
 const updateWordElement = (correctLetters, remainingLetters) => {
-  wordElement.innerHTML = `<span class="correct-letter">${correctLetters}</span>${remainingLetters}`;
+  wordElement.innerHTML = 
+    `<span class="correct-letter">${correctLetters}</span>${remainingLetters}`;
 };
 
 const processCorrectInput = () => {
@@ -181,6 +186,7 @@ const whenPlayerWins = () => {
   wordElement.textContent = "YOU WIN!";
   inputElement.disabled = true;
   inputElement.placeholder = "Click start to type";
+  addScore(hits, 0, new Date().toLocaleDateString());
 };
 
 listen('input', inputElement, () => {
@@ -229,9 +235,67 @@ listen('click', leaderboardIcon, () => {
   leaderboard.classList.toggle('leaderboard-visible');
 });
 
+let scores = JSON.parse(localStorage.getItem('scores')) || [];
+
+function makeScoreObject(hits, percentage, date) {
+  return {
+    hits: hits,
+    percentage: percentage,
+    date: date,
+    getHits: function() {
+      return this.hits;
+    },
+    getPercentage: function() {
+      return this.percentage;
+    },
+    getDate: function() {
+      return this.date;
+    }
+  };
+}
 
 
+function addScore(hits, percentage, date) {
 
+  let score = makeScoreObject(hits, percentage, date);
+  scores.push(score);
+
+  scores.sort(function(a, b) {
+    return b.hits - a.hits;
+  });
+
+  if (scores.length > 10) {
+    scores.splice(10);
+  }
+  
+  localStorage.setItem('scores', JSON.stringify(scores));
+  updateLeaderboard();
+}
+
+function updateLeaderboard() {
+  leaderboardContentElement.innerHTML = '';
+  scores.forEach(function(score, index) {
+    const li = document.createElement('li');
+    li.className = 'leaderboard-item';
+
+    const rankSpan = document.createElement('span');
+    rankSpan.className = 'rank';
+    rankSpan.textContent = index + 1;
+    li.appendChild(rankSpan);
+
+    const hitsSpan = document.createElement('span');
+    hitsSpan.className = 'hits';
+    hitsSpan.textContent = score.hits;
+    li.appendChild(hitsSpan);
+
+    const dateSpan = document.createElement('span');
+    dateSpan.className = 'date';
+    dateSpan.textContent = score.date;
+    li.appendChild(dateSpan);
+
+    leaderboardContentElement.appendChild(li);
+  });
+}
 
 
 /*************************
