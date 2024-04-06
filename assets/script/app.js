@@ -1,5 +1,5 @@
 import { listen, select } from './utils.js';
-import Score from './Score.js';
+
 'use strict';
 
 const countdownElement = select('.countdown');
@@ -111,11 +111,6 @@ function endGame() {
   inputElement.placeholder = "Click start to type";
   backgroundMusic.pause();
   backgroundMusic.currentTime = 0;
-
-  const date = new Date();
-  const percentage = ((hits / words.length) * 100).toFixed(1) + '%';
-  const score = new Score(date, hits, percentage);
-  console.log(score);
 }
 
 function resetHits() {
