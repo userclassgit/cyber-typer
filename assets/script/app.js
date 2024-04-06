@@ -9,6 +9,8 @@ const inputElement = select('input');
 const startButtonElement = select('.start-button');
 const volumeHighElement = select('.fa-volume-high');
 const volumeXmarkElement = select('.fa-volume-xmark');
+const leaderboardIcon = select('.leaderboard-icon');
+const leaderboard = select('.leaderboard');
 const leaderboardContentElement = select('.leaderboard-content');
 
 // For testing
@@ -232,11 +234,30 @@ listen('click', volumeXmarkElement, () => {
 /*************************
  *       Leaderboard     *
  *************************/
-const leaderboardIcon = select('.leaderboard-icon');
-const leaderboard = select('.leaderboard');
 
 listen('click', leaderboardIcon, () => {
   leaderboard.classList.toggle('leaderboard-visible');
+
+  if (localStorage.getItem('scores')) {
+    if (!document.querySelector('.table-head')) {
+      let tableHead = document.createElement('li');
+      tableHead.className = 'table-head';
+
+      let rankSpan = document.createElement('span');
+      let hitsSpan = document.createElement('span');
+      let dateSpan = document.createElement('span');
+
+      rankSpan.textContent = 'Rank';
+      hitsSpan.textContent = 'Hits';
+      dateSpan.textContent = 'Date';
+
+      tableHead.appendChild(rankSpan);
+      tableHead.appendChild(hitsSpan);
+      tableHead.appendChild(dateSpan);
+
+      leaderboardContentElement.insertBefore(tableHead, leaderboardContentElement.firstChild);
+    }
+  }
 });
 
 let scores = JSON.parse(localStorage.getItem('scores')) || [];
@@ -314,6 +335,7 @@ function updateLeaderboard() {
     });
   }
 }
+
 
 
 /*************************
