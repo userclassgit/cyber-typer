@@ -223,6 +223,9 @@ input:disabled {
   justify-content: space-between;
   padding: 1rem 0;
   position: relative;
+  span {
+    font-size: 1.2rem;
+  }
 }
 
 .leaderboard-item:not(:last-child)::after {
