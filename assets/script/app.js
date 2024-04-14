@@ -12,6 +12,7 @@ const volumeXmarkElement = select('.fa-volume-xmark');
 const leaderboardIcon = select('.leaderboard-icon');
 const leaderboard = select('.leaderboard');
 const leaderboardContentElement = select('.leaderboard-content');
+const tableHeadElement = select('.table-head')
 
 // For testing
 // const words = [
@@ -239,25 +240,8 @@ listen('click', leaderboardIcon, () => {
   leaderboard.classList.toggle('leaderboard-visible');
 
   if (localStorage.getItem('scores')) {
-    if (!document.querySelector('.table-head')) {
-      let tableHead = document.createElement('li');
-      tableHead.className = 'table-head';
-
-      let rankSpan = document.createElement('span');
-      let hitsSpan = document.createElement('span');
-      let dateSpan = document.createElement('span');
-
-      rankSpan.textContent = 'Rank';
-      hitsSpan.textContent = 'Hits';
-      dateSpan.textContent = 'Date';
-
-      tableHead.appendChild(rankSpan);
-      tableHead.appendChild(hitsSpan);
-      tableHead.appendChild(dateSpan);
-
-      leaderboardContentElement.insertBefore(tableHead, leaderboardContentElement.firstChild);
-    }
-  }
+  tableHeadElement.style.display = 'table-header-group';
+}
 });
 
 let scores = JSON.parse(localStorage.getItem('scores')) || [];
@@ -299,39 +283,38 @@ function addScore(hits, percentage, date) {
 }
 
 function createLeaderboardItem(score, index) {
-  const li = document.createElement('li');
-  li.className = 'leaderboard-item';
+  const tr = document.createElement('tr');
 
-  const rankSpan = document.createElement('span');
-  rankSpan.className = 'rank';
-  rankSpan.textContent = `#${index + 1}`;
-  li.appendChild(rankSpan);
+  const rankTd = document.createElement('td');
+  rankTd.textContent = `${index + 1}`;
+  tr.appendChild(rankTd);
 
-  const hitsSpan = document.createElement('span');
-  hitsSpan.className = 'hits';
-  hitsSpan.textContent = score.hits;
-  li.appendChild(hitsSpan);
+  const hitsTd = document.createElement('td');
+  hitsTd.textContent = score.hits;
+  tr.appendChild(hitsTd);
 
-  const dateSpan = document.createElement('span');
-  dateSpan.className = 'date';
-  dateSpan.textContent = score.date;
-  li.appendChild(dateSpan);
+  const dateTd = document.createElement('td');
+  dateTd.textContent = score.date;
+  tr.appendChild(dateTd);
 
-  return li;
+  return tr;
 }
 
 function updateLeaderboard() {
-  leaderboardContentElement.innerHTML = '';
+  const leaderboardBody = leaderboardContentElement.querySelector('tbody');
+  leaderboardBody.innerHTML = '';
 
   if (scores.length === 0) {
-    const noScoresMessage = document.createElement('p');
-    noScoresMessage.textContent = 'No scores available yet.';
-    noScoresMessage.classList.add('no-scores-message');
-    leaderboardContentElement.appendChild(noScoresMessage);
+    const noScoresMessage = document.createElement('tr');
+    const td = document.createElement('td');
+    td.textContent = 'No scores available yet.';
+    td.setAttribute('colspan', '3');
+    noScoresMessage.appendChild(td);
+    leaderboardBody.appendChild(noScoresMessage);
   } else {
     scores.forEach(function(score, index) {
       const leaderboardItem = createLeaderboardItem(score, index);
-      leaderboardContentElement.appendChild(leaderboardItem);
+      leaderboardBody.appendChild(leaderboardItem);
     });
   }
 }
