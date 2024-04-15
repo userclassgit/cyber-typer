@@ -8,7 +8,6 @@
   --border-radius: 13px;
   --small-border-radius: 5px;
   --highlight-vertical-spacing: 1.5px;
-  --highlight-horizontal-spacing: -15px;
 }
 
 .center {
@@ -278,7 +277,22 @@ tbody tr:nth-child(2) td:last-child::before,
 tbody tr:nth-child(3) td:last-child::before {
   border-radius: 0 10px 10px 0;
 }
+/* white lines under scores */
+tbody tr td {
+  position: relative;
+}
+tbody tr:not(:nth-child(-n+3)):not(:last-child) td:first-child::before {
+  content: "";
+  position: absolute;
+  left: .7rem;
+  right: -13.5rem;
+  bottom: 0;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.563);
+}
 
+
+/*  */
 .table-head {
   tr th {
     font-weight: 200;
