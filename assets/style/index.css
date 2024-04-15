@@ -3,13 +3,12 @@
 :root {
   --modal-background: rgba(0, 0, 0, 0.541);
   --font-color: #ffffff;
-  --pink: #e83352;
-  --teal: #3EEEF1;
+  --pink: rgb(232, 51, 82);
+  --teal: rgb(62, 238, 241);
   --border-radius: 13px;
   --small-border-radius: 5px;
-  --highlight-vertical-spacing: 2px;
+  --highlight-vertical-spacing: 1.5px;
   --highlight-horizontal-spacing: -15px;
-  --highlight-alpha: 0.35;
 }
 
 .center {
@@ -180,6 +179,7 @@ input:disabled {
 }
 /* Leaderboard */
 .leaderboard {
+  font-family: "roboto", sans-serif;
   position: absolute;
   top: 0;
   left: 0;
@@ -208,6 +208,7 @@ input:disabled {
     font-size: 1.3rem;
   }
   span {
+    font-family: "Rationale", sans-serif;
     font-size: 1.5rem;
     line-height: 0.4;
     position: relative;
@@ -216,7 +217,6 @@ input:disabled {
 }
 
 .leaderboard-content {
-  font-family: "Roboto", sans-serif;
   width: 100%;
   border-collapse: collapse;
 }
@@ -227,137 +227,66 @@ input:disabled {
   text-align: center;
   font-size: 1.2rem;
 }
-
-/* Rest of your CSS remains the same */
-
-.leaderboard-item:nth-child(2) {
+/* first score row background */
+tbody tr:first-child td {
   position: relative;
 }
 
-.leaderboard-item:nth-child(2)::before {
+tbody tr:first-child td::before {
   content: "";
   position: absolute;
   top: var(--highlight-vertical-spacing);
-  left: var(--highlight-horizontal-spacing);
-  right: var(--highlight-horizontal-spacing);
-  bottom: var(--highlight-vertical-spacing);
-  /* top 3 scores highlight */
-  background: rgba(232, 51, 81, var(--highlight-alpha)); 
-  border-radius: var(--small-border-radius);
-  z-index: -1;
-}
-
-.leaderboard-item:nth-child(3),
-.leaderboard-item:nth-child(4) {
-  position: relative;
-}
-
-.leaderboard-item:nth-child(3)::before,
-.leaderboard-item:nth-child(4)::before {
-  content: "";
-  position: absolute;
-  top: var(--highlight-vertical-spacing);
-  left: var(--highlight-horizontal-spacing);
-  right: var(--highlight-horizontal-spacing);
-  bottom: var(--highlight-vertical-spacing);
-  /* top 3 scores highlight */
-  background: rgba(152, 252, 254, var(--highlight-alpha));
-  border-radius: var(--small-border-radius);
-  z-index: -1;
-}
-
-.leaderboard-item:not(:last-child):not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(4))::after {
-  content: "";
-  position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
-  height: .5px;
-  background: #ffffff;
-  width: auto;
-  margin-left: auto;
-  margin-right: auto;
+  bottom: var(--highlight-vertical-spacing);
+  background-color: rgb(232, 51, 82, 0.45);
+  z-index: -1;
+}
+
+tbody tr:first-child td:first-child::before {
+  border-radius: 10px 0 0 10px;
+}
+
+tbody tr:first-child td:last-child::before {
+  border-radius: 0 10px 10px 0;
+}
+
+/* 2nd 3rd score row backgrounds */
+tbody tr:nth-child(2) td,
+tbody tr:nth-child(3) td {
+  position: relative;
+}
+
+tbody tr:nth-child(2) td::before,
+tbody tr:nth-child(3) td::before {
+  content: "";
+  position: absolute;
+  top: var(--highlight-vertical-spacing);
+  left: 0;
+  right: 0;
+  bottom: var(--highlight-vertical-spacing);
+  background-color: rgba(62, 238, 241, 0.27); 
+  z-index: -1;
+}
+
+tbody tr:nth-child(2) td:first-child::before,
+tbody tr:nth-child(3) td:first-child::before {
+  border-radius: 10px 0 0 10px;
+}
+
+tbody tr:nth-child(2) td:last-child::before,
+tbody tr:nth-child(3) td:last-child::before {
+  border-radius: 0 10px 10px 0;
 }
 
 .table-head {
+  tr th {
+    font-weight: 200;
+  }
   display: none;
 }
 
 .no-scores-message {
   text-align: center;
   margin-top: 1rem;
-}
-
-/* ==============================Font============================== */
-
-.roboto-thin {
-  font-family: "Roboto", sans-serif;
-  font-weight: 100;
-  font-style: normal;
-}
-
-.roboto-thin-italic {
-  font-family: "Roboto", sans-serif;
-  font-weight: 100;
-  font-style: italic;
-}
-
-.roboto-light {
-  font-family: "Roboto", sans-serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.roboto-light-italic {
-  font-family: "Roboto", sans-serif;
-  font-weight: 300;
-  font-style: italic;
-}
-
-.roboto-regular {
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.roboto-regular-italic {
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.roboto-medium {
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  font-style: normal;
-}
-
-.roboto-medium-italic {
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  font-style: italic;
-}
-
-.roboto-bold {
-  font-family: "Roboto", sans-serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.roboto-bold-italic {
-  font-family: "Roboto", sans-serif;
-  font-weight: 700;
-  font-style: italic;
-}
-
-.roboto-black {
-  font-family: "Roboto", sans-serif;
-  font-weight: 900;
-  font-style: normal;
-}
-
-.roboto-black-italic {
-  font-family: "Roboto", sans-serif;
-  font-weight: 900;
-  font-style: italic;
 }
