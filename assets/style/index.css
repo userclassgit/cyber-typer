@@ -216,6 +216,7 @@ input:disabled {
 }
 
 .leaderboard-content {
+  position: relative;
   width: 100%;
   border-collapse: collapse;
 }
@@ -301,6 +302,11 @@ tbody tr:not(:nth-child(-n+3)):not(:last-child) td:first-child::before {
 }
 
 .no-scores-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
-  margin-top: 1rem;
+  width: 100%;
+  font-size: 1rem;
 }

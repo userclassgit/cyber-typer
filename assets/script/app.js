@@ -20,20 +20,20 @@ const tableHeadElement = select('.table-head')
 // ];
 
 const words = [
-  'dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building', 
-  'population', 'weather', 'bottle', 'history', 'dream', 'character', 
-  'money', 'absolute', 'discipline', 'machine', 'accurate', 'connection', 
-  'rainbow', 'bicycle', 'eclipse', 'calculator', 'trouble', 'watermelon', 
-  'developer', 'philosophy', 'database', 'periodic', 'capitalism', 
-  'abominable', 'component', 'future', 'pasta', 'microwave', 'jungle', 
-  'wallet', 'canada', 'coffee', 'monstrosity', 'abomination', 'brazil', 
-  'eleven', 'technology', 'alphabet', 'knowledge', 'magician', 'professor', 
-  'triangle', 'earthquake', 'baseball', 'beyond', 'evolution', 'banana', 
-  'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music', 
-  'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy', 
-  'button', 'superman', 'library', 'unboxing', 'bookstore', 'language', 
-  'homework', 'fantastic', 'economy', 'interview', 'awesome', 'challenge', 
-  'science', 'mystery', 'famous', 'league', 'memory', 'leather', 'planet', 
+  'dinosaur', 'love', 'pineapple', 'calendar', 'robot', 'building',
+  'population', 'weather', 'bottle', 'history', 'dream', 'character',
+  'money', 'absolute', 'discipline', 'machine', 'accurate', 'connection',
+  'rainbow', 'bicycle', 'eclipse', 'calculator', 'trouble', 'watermelon',
+  'developer', 'philosophy', 'database', 'periodic', 'capitalism',
+  'abominable', 'component', 'future', 'pasta', 'microwave', 'jungle',
+  'wallet', 'canada', 'coffee', 'monstrosity', 'abomination', 'brazil',
+  'eleven', 'technology', 'alphabet', 'knowledge', 'magician', 'professor',
+  'triangle', 'earthquake', 'baseball', 'beyond', 'evolution', 'banana',
+  'perfumer', 'computer', 'management', 'discovery', 'ambition', 'music',
+  'eagle', 'crown', 'chess', 'laptop', 'bedroom', 'delivery', 'enemy',
+  'button', 'superman', 'library', 'unboxing', 'bookstore', 'language',
+  'homework', 'fantastic', 'economy', 'interview', 'awesome', 'challenge',
+  'science', 'mystery', 'famous', 'league', 'memory', 'leather', 'planet',
   'software', 'update', 'yellow', 'keyboard', 'window'
 ];
 
@@ -46,7 +46,7 @@ const INITIAL_COUNTDOWN = 20;
 // For test (clears localStorage data)
 // localStorage.clear();
 
-window.onload = function() {
+window.onload = function () {
   countdownElement.textContent = INITIAL_COUNTDOWN;
   inputElement.value = '';
   wordElement.textContent = 'GET READY';
@@ -175,7 +175,7 @@ let hits = 0;
 // Input methods and listener
 
 const updateWordElement = (correctLetters, remainingLetters) => {
-  wordElement.innerHTML = 
+  wordElement.innerHTML =
     `<span class="correct-letter">${correctLetters}</span>${remainingLetters}`;
 };
 
@@ -208,7 +208,7 @@ listen('input', inputElement, () => {
     }
 
     if (inputText === currentWord) {
-      processCorrectInput(); 
+      processCorrectInput();
       if (wordsCopy.length === 0) {
         whenPlayerWins();
       }
@@ -240,8 +240,8 @@ listen('click', leaderboardIcon, () => {
   leaderboard.classList.toggle('leaderboard-visible');
 
   if (localStorage.getItem('scores')) {
-  tableHeadElement.style.display = 'table-header-group';
-}
+    tableHeadElement.style.display = 'table-header-group';
+  }
 });
 
 let scores = JSON.parse(localStorage.getItem('scores')) || [];
@@ -251,13 +251,13 @@ function makeScoreObject(hits, percentage, date) {
     hits: hits,
     percentage: percentage,
     date: date,
-    getHits: function() {
+    getHits: function () {
       return this.hits;
     },
-    getPercentage: function() {
+    getPercentage: function () {
       return this.percentage;
     },
-    getDate: function() {
+    getDate: function () {
       return this.date;
     }
   };
@@ -305,14 +305,16 @@ function updateLeaderboard() {
   leaderboardBody.innerHTML = '';
 
   if (scores.length === 0) {
-    const noScoresMessage = document.createElement('tr');
-    const td = document.createElement('td');
-    td.textContent = 'No scores available yet.';
-    td.setAttribute('colspan', '3');
-    noScoresMessage.appendChild(td);
-    leaderboardBody.appendChild(noScoresMessage);
+    const noScoresMessage = document.createElement('div');
+    noScoresMessage.textContent = 'No scores available yet.';
+    noScoresMessage.classList.add('no-scores-message');
+    leaderboard.appendChild(noScoresMessage);
   } else {
-    scores.forEach(function(score, index) {
+    const noScoresMessage = document.querySelector('.no-scores-message');
+    if (noScoresMessage) {
+      noScoresMessage.remove();
+    }
+    scores.forEach(function (score, index) {
       const leaderboardItem = createLeaderboardItem(score, index);
       leaderboardBody.appendChild(leaderboardItem);
     });
@@ -342,7 +344,7 @@ function drawBars() {
   let barHeight;
   let x = 0;
 
-  for(let i = 0; i < bufferLength; i++) {
+  for (let i = 0; i < bufferLength; i++) {
     barHeight = dataArray[i] * 0.6;
     canvasContext.fillStyle = 'rgba(255, 255, 255, 0.3)';
     canvasContext.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
