@@ -38,9 +38,9 @@ const words = [
 ];
 
 // For testing
-const INITIAL_COUNTDOWN = 20;
+// const INITIAL_COUNTDOWN = 20;
 
-// const INITIAL_COUNTDOWN = 99;
+const INITIAL_COUNTDOWN = 99;
 
 
 // For test (clears localStorage data)
@@ -266,20 +266,16 @@ function makeScoreObject(hits, percentage, date) {
 
 function addScore(hits, percentage, date) {
   let score = makeScoreObject(hits, percentage, date);
-  /* If the leaderboard isn't empty. Only add a new score if 
-  the score is higher than the lowest score on the leaderboard.
-  That is, only add a new score when you get a better score. */
-  if (scores.length === 0 || hits > scores[scores.length - 1].hits) {
-    scores.push(score);
-    scores.sort((a, b) => b.hits - a.hits);
 
-    if (scores.length > 10) {
-      scores.splice(10);
-    }
+  scores.push(score);
+  scores.sort((a, b) => b.hits - a.hits);
 
-    localStorage.setItem('scores', JSON.stringify(scores));
-    updateLeaderboard();
+  if (scores.length > 10) {
+    scores.splice(10);
   }
+
+  localStorage.setItem('scores', JSON.stringify(scores));
+  updateLeaderboard();
 }
 
 function createLeaderboardItem(score, index) {
